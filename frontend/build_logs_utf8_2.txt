@@ -1,0 +1,213 @@
+﻿
+> frontend@0.0.0 build
+> vite build
+
+[36mvite v8.0.3 [32mbuilding client environment for production...[36m[39m
+[2K
+transforming...Γ£ô 1790 modules transformed.
+node.exe : [31mΓ£ù[39m 
+Build failed in 998ms
+At 
+C:\nvm4w\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo         
+     : NotSpecified: ([3  
+  1mΓ£ù[39m Build faile   
+ d in 998ms:String) [],    
+ RemoteException
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+[31merror during build:
+[31mBuild failed with 3 
+errors:
+
+[31m[UNRESOLVED_IMPORT] 
+Error:[0m Could not 
+resolve '../../../api' in 
+src/pages/customer/Cart.jsx
+   [38;5;246mΓò¡[0m[38;5
+;246mΓöÇ[0m[38;5;246m[[0
+m src/pages/customer/Cart.j
+sx:3:17 [38;5;246m][0m
+   [38;5;246mΓöé[0m
+ [38;5;246m3 Γöé[0m [38;
+5;249mi[0m[38;5;249mm[0m
+[38;5;249mp[0m[38;5;249m
+o[0m[38;5;249mr[0m[38;5
+;249mt[0m[38;5;249m [0m
+[38;5;249ma[0m[38;5;249mp
+[0m[38;5;249mi[0m[38;5;
+249m [0m[38;5;249mf[0m[
+38;5;249mr[0m[38;5;249mo
+[0m[38;5;249mm[0m[38;5;2
+49m [0m"../../../api"[38;
+5;249m;[0m
+ [38;5;240m  Γöé[0m      
+           ΓöÇΓöÇΓöÇΓöÇΓöÇΓ
+öÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ 
+ 
+ [38;5;240m  Γöé[0m      
+                  Γò░ΓöÇΓöÇ
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Module 
+not found.
+ [38;5;240m  Γöé[0m 
+ [38;5;240m  Γöé[0m 
+[38;5;115mHelp[0m: 'src/p
+ages/customer/Cart.jsx' is 
+imported by the following 
+path:
+ [38;5;240m  Γöé[0m      
+   - 
+src/pages/customer/Cart.jsx
+ [38;5;240m  Γöé[0m      
+   - src/App.jsx
+ [38;5;240m  Γöé[0m      
+   - src/main.jsx
+ [38;5;240m  Γöé[0m      
+   - index.html
+[38;5;246mΓöÇΓöÇΓöÇΓò»[0m
+
+[31m[UNRESOLVED_IMPORT] 
+Error:[0m Could not 
+resolve '../../../api' in s
+rc/pages/owner/Withdrawals.
+jsx
+   [38;5;246mΓò¡[0m[38;5
+;246mΓöÇ[0m[38;5;246m[[0
+m src/pages/owner/Withdrawa
+ls.jsx:2:17 
+[38;5;246m][0m
+   [38;5;246mΓöé[0m
+ [38;5;246m2 Γöé[0m [38;
+5;249mi[0m[38;5;249mm[0m
+[38;5;249mp[0m[38;5;249m
+o[0m[38;5;249mr[0m[38;5
+;249mt[0m[38;5;249m [0m
+[38;5;249ma[0m[38;5;249mp
+[0m[38;5;249mi[0m[38;5;
+249m [0m[38;5;249mf[0m[
+38;5;249mr[0m[38;5;249mo
+[0m[38;5;249mm[0m[38;5;2
+49m [0m"../../../api"[38;
+5;249m;[0m
+ [38;5;240m  Γöé[0m      
+           ΓöÇΓöÇΓöÇΓöÇΓöÇΓ
+öÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ 
+ 
+ [38;5;240m  Γöé[0m      
+                  Γò░ΓöÇΓöÇ
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Module 
+not found.
+ [38;5;240m  Γöé[0m 
+ [38;5;240m  Γöé[0m 
+[38;5;115mHelp[0m: 'src/p
+ages/owner/Withdrawals.jsx'
+ is imported by the 
+following path:
+ [38;5;240m  Γöé[0m      
+   - src/pages/owner/Withdr
+awals.jsx
+ [38;5;240m  Γöé[0m      
+   - src/App.jsx
+ [38;5;240m  Γöé[0m      
+   - src/main.jsx
+ [38;5;240m  Γöé[0m      
+   - index.html
+[38;5;246mΓöÇΓöÇΓöÇΓò»[0m
+
+[31m[UNRESOLVED_IMPORT] 
+Error:[0m Could not 
+resolve '../../../api' in s
+rc/pages/customer/Checkout.
+jsx
+   [38;5;246mΓò¡[0m[38;5
+;246mΓöÇ[0m[38;5;246m[[0
+m src/pages/customer/Checko
+ut.jsx:3:17 
+[38;5;246m][0m
+   [38;5;246mΓöé[0m
+ [38;5;246m3 Γöé[0m [38;
+5;249mi[0m[38;5;249mm[0m
+[38;5;249mp[0m[38;5;249m
+o[0m[38;5;249mr[0m[38;5
+;249mt[0m[38;5;249m [0m
+[38;5;249ma[0m[38;5;249mp
+[0m[38;5;249mi[0m[38;5;
+249m [0m[38;5;249mf[0m[
+38;5;249mr[0m[38;5;249mo
+[0m[38;5;249mm[0m[38;5;2
+49m [0m"../../../api"[38;
+5;249m;[0m
+ [38;5;240m  Γöé[0m      
+           ΓöÇΓöÇΓöÇΓöÇΓöÇΓ
+öÇΓöÇΓö¼ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ 
+ 
+ [38;5;240m  Γöé[0m      
+                  Γò░ΓöÇΓöÇ
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ Module 
+not found.
+ [38;5;240m  Γöé[0m 
+ [38;5;240m  Γöé[0m 
+[38;5;115mHelp[0m: 'src/p
+ages/customer/Checkout.jsx'
+ is imported by the 
+following path:
+ [38;5;240m  Γöé[0m      
+   - src/pages/customer/Che
+ckout.jsx
+ [38;5;240m  Γöé[0m      
+   - src/App.jsx
+ [38;5;240m  Γöé[0m      
+   - src/main.jsx
+ [38;5;240m  Γöé[0m      
+   - index.html
+[38;5;246mΓöÇΓöÇΓöÇΓò»[0m
+[31m
+    at aggregateBindingErro
+rsIntoJsError (file:///C:/U
+sers/LENOVO/Downloads/full%
+20stack/frontend/node_modul
+es/rolldown/dist/shared/err
+or-BLhcSyeg.mjs:48:18)
+    at unwrapBindingResult 
+(file:///C:/Users/LENOVO/Do
+wnloads/full%20stack/fronte
+nd/node_modules/rolldown/di
+st/shared/error-BLhcSyeg.mj
+s:18:128)
+    at #build (file:///C:/U
+sers/LENOVO/Downloads/full%
+20stack/frontend/node_modul
+es/rolldown/dist/shared/rol
+ldown-build-CPrIX9V6.mjs:33
+13:34)
+    at async 
+buildEnvironment (file:///C
+:/Users/LENOVO/Downloads/fu
+ll%20stack/frontend/node_mo
+dules/vite/dist/node/chunks
+/node.js:32849:64)
+    at async Object.build (
+file:///C:/Users/LENOVO/Dow
+nloads/full%20stack/fronten
+d/node_modules/vite/dist/no
+de/chunks/node.js:33271:19)
+    at async 
+Object.buildApp (file:///C:
+/Users/LENOVO/Downloads/ful
+l%20stack/frontend/node_mod
+ules/vite/dist/node/chunks/
+node.js:33268:153)
+    at async 
+CAC.<anonymous> (file:///C:
+/Users/LENOVO/Downloads/ful
+l%20stack/frontend/node_mod
+ules/vite/dist/node/cli.js:
+778:3) {
+  errors: [Getter/Setter]
+}[39m

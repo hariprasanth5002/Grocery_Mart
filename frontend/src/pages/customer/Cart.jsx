@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
-import { Minus, Plus, Trash2, ArrowLeft } from 'lucide-react';
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from 'lucide-react';
 
 export default function Cart() {
   const [cart, setCart] = useState(null);
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [updatingId, setUpdatingId] = useState(null);
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem('user'));
@@ -38,20 +39,19 @@ export default function Cart() {
   };
 
   const handleUpdate = async (productId, delta) => {
-    // Current backend add increments by quantity, remove deletes entirely
-    // To support decrement properly, one usually re-adds but that might be complex if backend just adds.
-    // Assuming backend 'add' just modifies. Let's send a new post if increment.
     if (!customer) return;
+    setUpdatingId(productId);
     try {
        if (delta > 0) {
            await api.post(`/carts/${customer.id}/add?productId=${productId}&quantity=1`);
        } else {
-           // We might need a separate decrement endpoint theoretically, but we'll use remove for now
            await api.post(`/carts/${customer.id}/remove?productId=${productId}`);
        }
        fetchCart(customer.id);
     } catch (err) {
        console.error(err);
+    } finally {
+       setTimeout(() => setUpdatingId(null), 200);
     }
   };
 
@@ -61,53 +61,109 @@ export default function Cart() {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-      <button className="btn-secondary" onClick={() => navigate('/customer/dashboard')} style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <div style={{ padding: '2rem', maxWidth: '850px', margin: '0 auto' }}>
+      <button id="back-to-shop" className="btn-secondary animate-slide-left" onClick={() => navigate('/customer/dashboard')} style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <ArrowLeft size={16} /> Back to Shop
       </button>
 
-      <h1 style={{ color: 'var(--primary)', marginBottom: '2rem' }}>Your Cart</h1>
+      <h1 className="animate-slide-up" style={{ 
+        background: 'linear-gradient(135deg, var(--primary), var(--primary-light))',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        marginBottom: '2rem',
+        fontSize: '2rem',
+        fontWeight: 800,
+      }}>
+        Your Cart
+      </h1>
 
       {loading ? (
-        <h3 className="animate-pulse" style={{ color: 'var(--text-muted)' }}>Loading cart...</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5rem' }}>
+          <div className="spinner spinner-lg" style={{ marginBottom: '1.5rem' }} />
+          <h3 style={{ color: 'var(--text-muted)' }}>Loading cart...</h3>
+        </div>
       ) : !cart || !cart.items || cart.items.length === 0 ? (
-        <div className="glass-card animate-slide-up" style={{ padding: '4rem', textAlign: 'center' }}>
-          <h2 style={{ color: 'var(--text-muted)' }}>Your cart is empty.</h2>
-          <button className="btn-primary" style={{ marginTop: '2rem' }} onClick={() => navigate('/customer/dashboard')}>
+        <div className="glass-card animate-bounce-in" style={{ padding: '5rem 2rem', textAlign: 'center' }}>
+          <ShoppingBag size={64} color="var(--text-muted)" style={{ margin: '0 auto 1.5rem', opacity: 0.4 }} />
+          <h2 style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Your cart is empty</h2>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Add some fresh items to get started</p>
+          <button className="btn-primary" onClick={() => navigate('/customer/dashboard')}>
             Start Shopping
           </button>
         </div>
       ) : (
         <div className="animate-slide-up">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {cart.items.map(item => (
-              <div key={item.id} className="glass-card" style={{ display: 'flex', alignItems: 'center', padding: '1.5rem', gap: '1.5rem' }}>
-                <div style={{ width: '80px', height: '80px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
-                  {item.product.imageUrl && <img src={item.product.imageUrl} alt={item.product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {cart.items.map((item, idx) => (
+              <div key={item.id} className="glass-card" style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                padding: '1.25rem 1.5rem', 
+                gap: '1.5rem',
+                animationDelay: `${idx * 0.05}s`,
+                transition: 'all 0.3s ease',
+                opacity: updatingId === item.product.id ? 0.6 : 1,
+              }}>
+                <div style={{ 
+                  width: '72px', 
+                  height: '72px', 
+                  background: 'linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1))', 
+                  borderRadius: 'var(--radius-sm)',
+                  overflow: 'hidden',
+                  flexShrink: 0,
+                }}>
+                  {item.product.imageUrl && (
+                    <img src={item.product.imageUrl.startsWith('http') ? item.product.imageUrl : `http://localhost:8081${item.product.imageUrl}`} alt={item.product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  )}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <h3>{item.product.name}</h3>
-                  <p style={{ color: 'var(--primary)', fontWeight: 600 }}>${item.product.price.toFixed(2)}</p>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>{item.product.name}</h3>
+                  <p style={{ 
+                    background: 'linear-gradient(135deg, var(--primary), var(--primary-light))',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontWeight: 700, 
+                    fontSize: '1.05rem',
+                    marginTop: '0.25rem',
+                  }}>${item.product.price.toFixed(2)}</p>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <button className="btn-secondary" style={{ padding: '8px', borderRadius: '8px' }} onClick={() => handleUpdate(item.product.id, -1)}>
-                    {item.quantity === 1 ? <Trash2 size={16} color="#ff7b72" /> : <Minus size={16} />}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <button className="btn-secondary" style={{ padding: '8px', borderRadius: 'var(--radius-sm)', minWidth: '36px' }} onClick={() => handleUpdate(item.product.id, -1)}>
+                    {item.quantity === 1 ? <Trash2 size={15} color="var(--danger)" /> : <Minus size={15} />}
                   </button>
-                  <span style={{ fontSize: '1.2rem', fontWeight: 600 }}>{item.quantity}</span>
-                  <button className="btn-secondary" style={{ padding: '8px', borderRadius: '8px' }} onClick={() => handleUpdate(item.product.id, 1)}>
-                    <Plus size={16} />
+                  <span style={{ fontSize: '1.15rem', fontWeight: 700, minWidth: '24px', textAlign: 'center' }}>{item.quantity}</span>
+                  <button className="btn-secondary" style={{ padding: '8px', borderRadius: 'var(--radius-sm)', minWidth: '36px' }} onClick={() => handleUpdate(item.product.id, 1)}>
+                    <Plus size={15} />
                   </button>
+                </div>
+                <div style={{ fontWeight: 700, fontSize: '1.05rem', minWidth: '80px', textAlign: 'right', color: 'var(--text-secondary)' }}>
+                  ${(item.product.price * item.quantity).toFixed(2)}
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="glass-card" style={{ marginTop: '2rem', padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* Checkout Footer */}
+          <div className="glass-card" style={{ 
+            marginTop: '2rem', 
+            padding: '2rem', 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            background: 'linear-gradient(135deg, rgba(20,18,30,0.9), var(--bg-card))',
+            borderColor: 'rgba(255,255,255,0.1)',
+          }}>
             <div>
-              <p style={{ color: 'var(--text-muted)' }}>Total Amount</p>
-              <h2 style={{ color: 'var(--primary)', fontSize: '2rem' }}>${calculateTotal().toFixed(2)}</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '0.25rem' }}>Total Amount</p>
+              <h2 style={{ 
+                fontSize: '2.2rem', 
+                background: 'linear-gradient(135deg, var(--primary), var(--primary-light))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontWeight: 800,
+              }}>${calculateTotal().toFixed(2)}</h2>
             </div>
-            <button className="btn-primary" style={{ fontSize: '1.2rem', padding: '16px 32px' }} onClick={() => navigate('/customer/checkout')}>
+            <button id="proceed-checkout" className="btn-primary" style={{ fontSize: '1.1rem', padding: '16px 36px' }} onClick={() => navigate('/customer/checkout')}>
               Proceed to Checkout
             </button>
           </div>
